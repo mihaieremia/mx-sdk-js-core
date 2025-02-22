@@ -1,8 +1,8 @@
 import BigNumber from "bignumber.js";
 import { BigIntType, BigIntValue, ManagedDecimalSignedType, ManagedDecimalSignedValue, U32Value } from "../typesystem";
 import { BinaryCodec } from "./binary";
-import { bufferToBigInt } from "./utils";
 import { SizeOfU32 } from "./constants";
+import { bufferToBigInt } from "./utils";
 
 export class ManagedDecimalSignedCodec {
     private readonly binaryCodec: BinaryCodec;
@@ -41,7 +41,7 @@ export class ManagedDecimalSignedCodec {
 
     encodeNested(value: ManagedDecimalSignedValue): Buffer {
         let buffers: Buffer[] = [];
-        const rawValue = new BigIntValue(value.valueOf().shiftedBy(value.getScale()));
+        const rawValue = new BigIntValue(value.toBigNumber().shiftedBy(value.getScale()));
         if (value.isVariable()) {
             buffers.push(Buffer.from(this.binaryCodec.encodeNested(rawValue)));
             buffers.push(Buffer.from(this.binaryCodec.encodeNested(new U32Value(value.getScale()))));

@@ -57,12 +57,20 @@ export class ManagedDecimalValue extends TypedValue {
         return new BigNumber(this.value).eq(other.value);
     }
 
-    valueOf(): BigNumber {
+    valueOf(): ManagedDecimalValue {
+        return this;
+    }
+
+    toBigNumber(): BigNumber {
         return this.value;
     }
 
     toString(): string {
         return this.value.toFixed(this.scale);
+    }
+
+    toFixed(): string {
+        return this.value.shiftedBy(this.scale).toFixed();
     }
 
     isVariable(): boolean {

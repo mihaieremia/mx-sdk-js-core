@@ -57,8 +57,16 @@ export class ManagedDecimalSignedValue extends TypedValue {
         return new BigNumber(this.value).eq(other.value);
     }
 
-    valueOf(): BigNumber {
+    valueOf(): ManagedDecimalSignedValue {
+        return this;
+    }
+
+    toBigNumber(): BigNumber {
         return this.value;
+    }
+
+    toFixed(): string {
+        return this.value.shiftedBy(this.scale).toFixed();
     }
 
     toString(): string {
